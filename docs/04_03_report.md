@@ -32,8 +32,7 @@
 二维离散傅里叶变换为
 
 $$
-G=F_c H,\qquad
-g=\mathrm{Re}\left\{\mathrm{IFFT2}\left[\mathrm{ifftshift}(G)\right]\right\}.
+F(u,v)=\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}f(x,y)e^{-j2\pi(ux/M+vy/N)}
 $$
 
 采用 `fftshift` 将直流项移到频谱中央。高斯低通响应为
@@ -44,7 +43,9 @@ $$H(u,v)=\exp[-D^2(u,v)/(2D_0^2)],\quad D^2(u,v)=(u-u_c)^2+(v-v_c)^2.$$
 
 频域滤波及反变换为
 
-$$G=F_c H,\quad g=\operatorname{Re}\{\operatorname{IFFT2}[\operatorname{ifftshift}(G)]\}.$$
+$$
+G=F_c H,\qquad g=\mathrm{Re}(\mathrm{IFFT2}(\mathrm{ifftshift}(G)))
+$$
 
 F_c 表示中心化频谱。真实滤波使用中心 (⌊M/2⌋,⌊N/2⌋)，本次为 (344,344)，保证与 `fftshift` 的直流位置一致；奇数尺寸也使用同一约定。对于偶数尺寸，频谱中心化也可通过输入乘 (-1)^(x+y) 完成，此处用频谱置换实现，适用于任意正整数尺寸。
 
