@@ -26,4 +26,4 @@ python -m unittest discover -s tests -v
 
 ## 图像来源
 
-输入 `Fig0441(a)(characters_test_pattern).tif` 由用户提供，同名原图位于教材作者网站第三版第 4 章图像包。项目要求采用第二版 Project 04-03；不要混淆不同版本的图号。图像用于个人教育实验，来源见报告参考资料。
+输入 `Fig0441(a)(characters_test_pattern).tif` 。
