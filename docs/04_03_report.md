@@ -31,7 +31,10 @@
 
 二维离散傅里叶变换为
 
-$$F(u,v)=\sum_{x=0}^{M-1}\sum_{y=0}^{N-1}f(x,y)e^{-j2\pi(ux/M+vy/N)}.$$
+$$
+G=F_c H,\qquad
+g=\mathrm{Re}\left\{\mathrm{IFFT2}\left[\mathrm{ifftshift}(G)\right]\right\}.
+$$
 
 采用 `fftshift` 将直流项移到频谱中央。高斯低通响应为
 
