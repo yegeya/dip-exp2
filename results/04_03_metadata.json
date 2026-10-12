@@ -1,0 +1,97 @@
+{
+  "input_filename": "Fig0441(a)(characters_test_pattern).tif",
+  "input_sha256": "41048ccd0a7dd56339f626fd6cb1ff3e7ea4e586a34790eba5465a1ddd634428",
+  "shape": [
+    688,
+    688
+  ],
+  "fft_shape": [
+    688,
+    688
+  ],
+  "padding": false,
+  "center": [
+    344,
+    344
+  ],
+  "d0_values": [
+    5,
+    15,
+    30,
+    80,
+    230
+  ],
+  "original_mean": 0.8129988205733891,
+  "original_std": 0.2773052511809898,
+  "original_gradient_energy": 0.04369028128144332,
+  "spectrum_display_limits": [
+    0.0,
+    12.86055465428144
+  ],
+  "custom_filter_shape": [
+    180,
+    240
+  ],
+  "custom_filter_center": [
+    60,
+    160
+  ],
+  "environment": {
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "pillow": "12.3.0"
+  },
+  "metrics": [
+    {
+      "d0": 5.0,
+      "mean": 0.812998820573389,
+      "std": 0.11562106259388866,
+      "rmse_from_original": 0.2309299905577385,
+      "gradient_energy": 1.3971772058702923e-05,
+      "gradient_retention_percent": 0.031979130481444594,
+      "spectral_energy_retention_percent": 91.39003100642766,
+      "imaginary_residual_max": 1.1005818029974762e-16
+    },
+    {
+      "d0": 15.0,
+      "mean": 0.8129988205733891,
+      "std": 0.17808792667860202,
+      "rmse_from_original": 0.1789266578231623,
+      "gradient_energy": 0.00017807077766567833,
+      "gradient_retention_percent": 0.4075752603160987,
+      "spectral_energy_retention_percent": 93.87653903121304,
+      "imaginary_residual_max": 1.9919069312840947e-16
+    },
+    {
+      "d0": 30.0,
+      "mean": 0.812998820573389,
+      "std": 0.21123185227332858,
+      "rmse_from_original": 0.14440284061227124,
+      "gradient_energy": 0.000655240678161452,
+      "gradient_retention_percent": 1.4997401228445604,
+      "spectral_energy_retention_percent": 95.62531161283322,
+      "imaginary_residual_max": 2.132002698840017e-16
+    },
+    {
+      "d0": 80.0,
+      "mean": 0.812998820573389,
+      "std": 0.24180559974615734,
+      "rmse_from_original": 0.10690034183556717,
+      "gradient_energy": 0.00278915921490336,
+      "gradient_retention_percent": 6.383935129499856,
+      "spectral_energy_retention_percent": 97.50249067832397,
+      "imaginary_residual_max": 3.085766684610118e-16
+    },
+    {
+      "d0": 230.0,
+      "mean": 0.812998820573389,
+      "std": 0.26208285106910745,
+      "rmse_from_original": 0.04817545546240548,
+      "gradient_energy": 0.01610104292963407,
+      "gradient_retention_percent": 36.852687731430805,
+      "spectral_energy_retention_percent": 98.88722485261734,
+      "imaginary_residual_max": 4.153082745002015e-16
+    }
+  ]
+}
