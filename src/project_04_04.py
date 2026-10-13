@@ -4,6 +4,10 @@ import numpy as np
 from common_io import read_gray
 from project_04_03 import filter_image
 import cv2
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 INPUT = PROJECT_ROOT / "input" / "Fig0441(a)(characters_test_pattern).tif"
@@ -51,7 +55,7 @@ def save_difference_image(image, reference, path, scale=4):
 
 
 def gaussian_highpass(shape, d0, order=2):
-    """构造中心化的 n 阶高斯高通滤波器。"""
+    # 按广义高斯高通公式构造中心化的 n 阶频域滤波器。
     if d0 <= 0:
         raise ValueError("d0 must be positive")
     if order <= 0:
@@ -68,8 +72,53 @@ def apply_frequency_response(image, response):
     inverse = np.fft.ifft2(np.fft.ifftshift(filtered))
     return inverse.real
 
+
+def save_order_response_comparison(path, max_normalized_frequency=4.0, samples=1200):
+    # 绘制一阶和二阶广义高斯高通滤波器的归一化响应，并以 dB 形式比较其低频抑制和高频通过特性。
+    # 横轴使用 D / D0，用于比较滤波器阶数
+    normalized_frequency = np.linspace(0, max_normalized_frequency, samples)
+
+    first_order = 1 - np.exp(-0.5 * normalized_frequency ** 2)
+    second_order = 1 - np.exp(-0.5 * normalized_frequency ** 4)
+
+    epsilon = 1e-12
+    first_order_db = 20 * np.log10(np.maximum(first_order, epsilon))
+    second_order_db = 20 * np.log10(np.maximum(second_order, epsilon))
+
+    figure, axes = plt.subplots(1, 2, figsize=(12, 4.8), constrained_layout=True)
+
+    axes[0].plot(normalized_frequency, first_order, label="order 1: 1 - H_LP", linewidth=2)
+    axes[0].plot(normalized_frequency, second_order, label="order 2: GHPF", linewidth=2)
+    axes[0].axvline(1.0, color="0.35", linestyle="--", linewidth=1, label="D / D0 = 1")
+    axes[0].set_title("Normalized Gaussian high-pass response")
+    axes[0].set_xlabel("Normalized frequency D / D0")
+    axes[0].set_ylabel("Amplitude response H_HP")
+    axes[0].set_xlim(0, max_normalized_frequency)
+    axes[0].set_ylim(0, 1.05)
+    axes[0].grid(True, alpha=0.3)
+    axes[0].legend(fontsize=9)
+
+    axes[1].plot(normalized_frequency, first_order_db, label="order 1", linewidth=2)
+    axes[1].plot(normalized_frequency, second_order_db, label="order 2", linewidth=2)
+    axes[1].axvline(1.0, color="0.35", linestyle="--", linewidth=1, label="D / D0 = 1")
+    axes[1].set_title("Gaussian high-pass response in dB")
+    axes[1].set_xlabel("Normalized frequency D / D0")
+    axes[1].set_ylabel("20 log10(|H_HP|) (dB)")
+    axes[1].set_xlim(0, max_normalized_frequency)
+    axes[1].set_ylim(-60, 1)
+    axes[1].grid(True, alpha=0.3)
+    axes[1].legend(fontsize=9)
+
+    figure.savefig(path, dpi=180)
+    plt.close(figure)
+
 # 读取原图
 original = read_gray(INPUT)
+
+# 绘制一阶等效高通与二阶 GHPF 的径向频率响应对比图。
+save_order_response_comparison(
+    RESULTS / "04_04_gaussian_highpass_order_comparison.png"
+)
 # 04-03实验中得到当D0=15时，处理结果最接近Fig4.18(c)中的图像，复用04-03中的低通滤波函数
 lowpass, *_ = filter_image(original, d0=15)
 # partA
