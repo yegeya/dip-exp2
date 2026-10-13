@@ -1,0 +1,38 @@
+{
+  "image": "G:\\DIPproject\\dip-exp2\\input\\4.41a.jpg",
+  "image_size_xy": [
+    256,
+    256
+  ],
+  "template": "G:\\DIPproject\\dip-exp2\\input\\4.41b.png",
+  "template_original_size_xy": [
+    49,
+    44
+  ],
+  "template_crop_xyxy_exclusive": [
+    6,
+    1,
+    44,
+    43
+  ],
+  "template_cropped_size_xy": [
+    38,
+    42
+  ],
+  "padded_shape_height_width": [
+    298,
+    298
+  ],
+  "peak_xy_zero_based": [
+    108,
+    107
+  ],
+  "peak_value": 21352516.00000004,
+  "coordinate_meaning": "模板左上角位置；x 为列，y 为行，均从零开始",
+  "spatial_peak_xy_zero_based": [
+    108,
+    107
+  ],
+  "spatial_peak_value": 21352516.0,
+  "spatial_fft_max_absolute_error_valid_region": 4.0978193283081055e-08
+}
