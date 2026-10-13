@@ -65,9 +65,9 @@ $$
 
 主程序流程如下：
 
-1. 使用 `read_gray` 读取 `data/Fig0441(a)(characters_test_pattern).tif`，得到 `[0,1]` 范围的二维浮点灰度图。
+1. 使用 `read_gray` 读取 `../input/Fig0441(a)(characters_test_pattern).tif`，得到 `[0,1]` 范围的二维浮点灰度图。
 2. 调用 `filter_image(original, d0=15)` 得到 Project 04-03(b) 对应的低通图像。
-3. 计算 `highpass = original - lowpass`，保存 `results/04_04_part_a_highpass_d0_15.npy` 和显示图。
+3. 计算 `highpass = original - lowpass`，保存 `../results/project_04_04/04_04_part_a_highpass_d0_15.npy` 和显示图。
 4. 使用初始参数组 `D0 = 5, 15, 30, 80, 230` 生成多组高通结果和对比图。
 5. 根据初始结果，先用 `D0 = 60, 65, 70, 75, 80, 85, 90` 在 `D0=80` 附近进行第二轮搜索。
 6. 根据第二轮结果，再在 `D0=65-75` 区间以步长 1 进行第三轮细调。
@@ -79,8 +79,8 @@ $$
 original = read_gray(INPUT)
 lowpass, *_ = filter_image(original, d0=15)
 highpass = original - lowpass
-np.save("results/04_04_part_a_highpass_d0_15.npy", highpass)
-cv2.imwrite("results/04_04_part_a_highpass_d0_15.png", highpass_to_u8(highpass))
+np.save("../results/project_04_04/04_04_part_a_highpass_d0_15.npy", highpass)
+cv2.imwrite("../results/project_04_04/04_04_part_a_highpass_d0_15.png", highpass_to_u8(highpass))
 ```
 
 ```python
@@ -88,8 +88,8 @@ for d0 in D0_VALUES:
     lowpass, *_ = filter_image(original, d0=d0)
     highpass = original - lowpass
     label = f"{d0:g}"
-    np.save(f"results/04_04_highpass_d0_{label}.npy", highpass)
-    cv2.imwrite(f"results/04_04_highpass_d0_{label}.png", highpass_to_u8(highpass))
+    np.save(f"../results/project_04_04/04_04_highpass_d0_{label}.npy", highpass)
+    cv2.imwrite(f"../results/project_04_04/04_04_highpass_d0_{label}.png", highpass_to_u8(highpass))
 ```
 
 显示转换函数为：
@@ -104,11 +104,11 @@ def highpass_to_u8(highpass):
 - 操作系统：Windows 11。
 - 编程语言：Python 3.12。
 - 使用库：NumPy、Pillow、OpenCV。
-- 输入图像：`data/Fig0441(a)(characters_test_pattern).tif`，688×688 灰度字符测试图。
+- 输入图像：`../input/Fig0441(a)(characters_test_pattern).tif`，688×688 灰度字符测试图。
 - 低通滤波器：复用 Project 04-03 的高斯低通滤波函数 `filter_image`。
 - 高通计算公式：`highpass = original - lowpass`。
 - 显示方式：负值截断为 0，正值映射到 8 位灰度。
-- 主要输出：`results/04_04_highpass_d0_*.png`、`results/04_04_highpass_d0_*.npy`、`results/04_04_highpass_comparison.png`、`results/04_04_highpass_comparison_2.png`、`results/04_04_highpass_comparison_3.png`。
+- 主要输出：`../results/project_04_04/04_04_highpass_d0_*.png`、`../results/project_04_04/04_04_highpass_d0_*.npy`、`../results/project_04_04/04_04_highpass_comparison.png`、`../results/project_04_04/04_04_highpass_comparison_2.png`、`../results/project_04_04/04_04_highpass_comparison_3.png`。
 
 ## 结果讨论
 
@@ -132,7 +132,7 @@ def highpass_to_u8(highpass):
 
 ### 参数对比表
 
-本表以 `results/temp_ghpf_d0_80_order_2.png` 作为参考目标，即二阶 GHPF、`D0=80` 的直接高通滤波结果。误差由 PNG 显示图逐像素计算，数值越小表示与目标图越接近。
+本表以 `../results/project_04_04/temp_ghpf_d0_80_order_2.png` 作为参考目标，即二阶 GHPF、`D0=80` 的直接高通滤波结果。误差由 PNG 显示图逐像素计算，数值越小表示与目标图越接近。
 
 #### 初始参数组
 
@@ -184,31 +184,31 @@ def highpass_to_u8(highpass):
 
 图 04-04-1 使用 Project 04-03(b) 的低通图像相减得到的高通结果，参数为 `D0=15`。该图对应题目 (a)，可见字符边缘和纹理被提取出来，但整体效果与教材二阶 GHPF 图像并不完全相同。
 
-![图 04-04-1：D0=15 的相减高通结果](../results/04_04_part_a_highpass_d0_15.png)
+![图 04-04-1：D0=15 的相减高通结果](../results/project_04_04/04_04_part_a_highpass_d0_15.png)
 
 图 04-04-2 将 Part A 的相减高通结果与教材指定参数下的二阶 GHPF `D0=15` 结果放在一起比较。左侧为式 (4.4-14) 的 `original - lowpass(D0=15)`，右侧为直接二阶 GHPF `D0=15`。可以看到两者都突出高频细节，但亮度分布和局部细节强度不同，支持前文关于滤波器阶数差异的解释。
 
-![图 04-04-2：Part A 相减结果与二阶 GHPF D0=15 对比](../results/04_04_part_a_vs_order2_ghpf_d0_15.png)
+![图 04-04-2：Part A 相减结果与二阶 GHPF D0=15 对比](../results/project_04_04/04_04_part_a_vs_order2_ghpf_d0_15.png)
 
 图 04-04-3 为初始参数 `D0=5,15,30,80,230` 的高通结果对比。可以看到 `D0` 较小时高通成分更强，图像较亮；`D0` 很大时结果变弱。初始比较中 `D0=80` 最接近教材目标图。
 
-![图 04-04-3：初始参数组高通结果对比](../results/04_04_highpass_comparison.png)
+![图 04-04-3：初始参数组高通结果对比](../results/project_04_04/04_04_highpass_comparison.png)
 
 图 04-04-4 为第二轮搜索结果，对 `D0=60,65,70,75,80,85,90` 进行比较。该组结果显示最优区域位于 `D0=70` 附近。
 
-![图 04-04-4：第二轮参数搜索结果](../results/04_04_highpass_comparison_2.png)
+![图 04-04-4：第二轮参数搜索结果](../results/project_04_04/04_04_highpass_comparison_2.png)
 
 图 04-04-5 为第三轮细调结果，对 `D0=65-75` 逐一比较。该图中多张结果肉眼差异已经较小，因此结合 RMSE、平均绝对差和最大差进行定量判断，最终选取 `D0=70`。
 
-![图 04-04-5：D0=65-75 细调结果](../results/04_04_highpass_comparison_3.png)
+![图 04-04-5：D0=65-75 细调结果](../results/project_04_04/04_04_highpass_comparison_3.png)
 
 图 04-04-6 为根据教材 Fig. 4.26(c) 参数自行生成的二阶 GHPF `D0=80` 参考图。由于教材截图较模糊，本实验使用该图作为更清晰、可复现的比较目标。
 
-![图 04-04-6：二阶 GHPF D0=80 参考图](../results/temp_ghpf_d0_80_order_2.png)
+![图 04-04-6：二阶 GHPF D0=80 参考图](../results/project_04_04/temp_ghpf_d0_80_order_2.png)
 
 图 04-04-7 为最终最佳参数 `D0=70` 的相减结果与二阶 GHPF `D0=80` 参考图之间的差异放大图，差异被放大 4 倍显示。图中仍有局部灰度差异，说明两者相近但不完全相同。
 
-![图 04-04-7：D0=70 与参考图差异放大图](../results/compare_best_latest_04_04_highpass_d0_70_vs_temp_ghpf_d0_80_order_2_diff_x4.png)
+![图 04-04-7：D0=70 与参考图差异放大图](../results/project_04_04/compare_best_latest_04_04_highpass_d0_70_vs_temp_ghpf_d0_80_order_2_diff_x4.png)
 
 ## 创新点及思考
 

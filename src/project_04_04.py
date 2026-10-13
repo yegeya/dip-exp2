@@ -1,9 +1,14 @@
+from pathlib import Path
+
 import numpy as np
 from common_io import read_gray
 from project_04_03 import filter_image
 import cv2
 
-INPUT = "data/Fig0441(a)(characters_test_pattern).tif"
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+INPUT = PROJECT_ROOT / "input" / "Fig0441(a)(characters_test_pattern).tif"
+RESULTS = PROJECT_ROOT / "results" / "project_04_04"
+RESULTS.mkdir(parents=True, exist_ok=True)
 D0_VALUES = [5, 15, 30, 80, 230]
 REFERENCE_GHPF_D0_VALUES = [15, 30, 80]
 REFERENCE_GHPF_ORDER = 2
@@ -73,10 +78,10 @@ highpass = original - lowpass
 part_a_highpass = highpass.copy()
 
 # 保存真实高通数据
-np.save("results/04_04_part_a_highpass_d0_15.npy", highpass)
+np.save(RESULTS / "04_04_part_a_highpass_d0_15.npy", highpass)
 
 # 保存显示图
-cv2.imwrite("results/04_04_part_a_highpass_d0_15.png", highpass_to_u8(highpass))
+cv2.imwrite(str(RESULTS / "04_04_part_a_highpass_d0_15.png"), highpass_to_u8(highpass))
 
 # partB
 # 做不同参数的对比实验，比较不同的参数下，哪个结果最接近Fig.4.26(c)
@@ -89,8 +94,8 @@ for d0 in D0_VALUES:
 
     label = f"{d0:g}"
 
-    np.save(f"results/04_04_highpass_d0_{label}.npy", highpass)
-    cv2.imwrite(f"results/04_04_highpass_d0_{label}.png", highpass_to_u8(highpass))
+    np.save(RESULTS / f"04_04_highpass_d0_{label}.npy", highpass)
+    cv2.imwrite(str(RESULTS / f"04_04_highpass_d0_{label}.png"), highpass_to_u8(highpass))
 
     comparison_images.append(highpass)
     comparison_labels.append(f"D0 = {label}")
@@ -98,7 +103,7 @@ for d0 in D0_VALUES:
 save_comparison_panel(
     comparison_images,
     comparison_labels,
-    "results/04_04_highpass_comparison.png",
+    str(RESULTS / "04_04_highpass_comparison.png"),
 )
 
 # 上述部分结果发现80是最接近的参数，但并未和教材给出的图十分相似，接下来进行细调
@@ -112,8 +117,8 @@ for d0 in D0_VALUES_2:
 
     label = f"{d0:g}"
 
-    np.save(f"results/04_04_highpass_d0_{label}.npy", highpass)
-    cv2.imwrite(f"results/04_04_highpass_d0_{label}.png", highpass_to_u8(highpass))
+    np.save(RESULTS / f"04_04_highpass_d0_{label}.npy", highpass)
+    cv2.imwrite(str(RESULTS / f"04_04_highpass_d0_{label}.png"), highpass_to_u8(highpass))
 
     comparison_images_2.append(highpass)
     comparison_labels_2.append(f"D0 = {label}")
@@ -121,7 +126,7 @@ for d0 in D0_VALUES_2:
 save_comparison_panel(
     comparison_images_2,
     comparison_labels_2,
-    "results/04_04_highpass_comparison_2.png",
+    str(RESULTS / "04_04_highpass_comparison_2.png"),
 )
 
 # 上述部分结果发现70是最接近的参数，再次进行细调查看是否有更接近的参数
@@ -135,8 +140,8 @@ for d0 in D0_VALUES_3:
 
     label = f"{d0:g}"
 
-    np.save(f"results/04_04_highpass_d0_{label}.npy", highpass)
-    cv2.imwrite(f"results/04_04_highpass_d0_{label}.png", highpass_to_u8(highpass))
+    np.save(RESULTS / f"04_04_highpass_d0_{label}.npy", highpass)
+    cv2.imwrite(str(RESULTS / f"04_04_highpass_d0_{label}.png"), highpass_to_u8(highpass))
 
     comparison_images_3.append(highpass)
     comparison_labels_3.append(f"D0 = {label}")
@@ -144,7 +149,7 @@ for d0 in D0_VALUES_3:
 save_comparison_panel(
     comparison_images_3,
     comparison_labels_3,
-    "results/04_04_highpass_comparison_3.png",
+    str(RESULTS / "04_04_highpass_comparison_3.png"),
 )
 
 # 生成教材 Fig. 4.26 中指定的二阶 GHPF 对比图。
@@ -160,8 +165,8 @@ for d0 in REFERENCE_GHPF_D0_VALUES:
     highpass = apply_frequency_response(original, response)
     label = f"d0_{d0:g}_order_{REFERENCE_GHPF_ORDER:g}"
 
-    np.save(f"results/temp_ghpf_{label}.npy", highpass)
-    cv2.imwrite(f"results/temp_ghpf_{label}.png", highpass_to_u8(highpass))
+    np.save(RESULTS / f"temp_ghpf_{label}.npy", highpass)
+    cv2.imwrite(str(RESULTS / f"temp_ghpf_{label}.png"), highpass_to_u8(highpass))
 
     reference_images.append(highpass)
     reference_labels.append(f"D0 = {d0:g}")
@@ -173,7 +178,7 @@ for d0 in REFERENCE_GHPF_D0_VALUES:
 save_comparison_panel(
     reference_images,
     reference_labels,
-    f"results/temp_ghpf_order_{REFERENCE_GHPF_ORDER:g}_comparison.png",
+    str(RESULTS / f"temp_ghpf_order_{REFERENCE_GHPF_ORDER:g}_comparison.png"),
 )
 
 # Part A 对比图：左侧为式 (4.4-14) 的原图减低通结果，右侧为教材指定的二阶 GHPF D0=15 直接滤波结果。
@@ -181,7 +186,7 @@ if reference_d0_15 is not None:
     save_comparison_panel(
         [part_a_highpass, reference_d0_15],
         ["subtract LP D0 = 15", "order-2 GHPF D0 = 15"],
-        "results/04_04_part_a_vs_order2_ghpf_d0_15.png",
+        str(RESULTS / "04_04_part_a_vs_order2_ghpf_d0_15.png"),
         columns=2,
     )
 
@@ -192,6 +197,6 @@ if reference_d0_80 is not None:
     save_difference_image(
         best_highpass,
         reference_d0_80,
-        "results/compare_best_latest_04_04_highpass_d0_70_vs_temp_ghpf_d0_80_order_2_diff_x4.png",
+        str(RESULTS / "compare_best_latest_04_04_highpass_d0_70_vs_temp_ghpf_d0_80_order_2_diff_x4.png"),
         scale=4,
     )

@@ -1,6 +1,6 @@
 # Project 04-04 参数对比表
 
-本表以 `results/temp_ghpf_d0_80_order_2.png` 作为参考目标，即二阶 GHPF、`D0=80` 的直接高通滤波结果。误差由 PNG 显示图逐像素计算，数值越小表示与目标图越接近。
+本表以 `../results/project_04_04/temp_ghpf_d0_80_order_2.png` 作为参考目标，即二阶 GHPF、`D0=80` 的直接高通滤波结果。误差由 PNG 显示图逐像素计算，数值越小表示与目标图越接近。
 
 ## 初始参数组
 

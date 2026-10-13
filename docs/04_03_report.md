@@ -114,27 +114,27 @@ D₀=30 时线条和小字符的区分度提高；D₀=80 时大部分主体结�
 
 图 04-03-1 原始字符测试图。输入 TIF 转为 PNG，固定 [0,1] 灰度显示，未缩放处理数组。
 
-![图 04-03-1](../results/04_03_original.png)
+![图 04-03-1](../results/project_04_03/04_03_original.png)
 
 图 04-03-2 输入中心化频谱。显示 log(1+|F|)，对数幅值范围 [0,12.860555]，中心为 (344,344)。
 
-![图 04-03-2](../results/04_03_input_spectrum.png)
+![图 04-03-2](../results/project_04_03/04_03_input_spectrum.png)
 
 图 04-03-3(a) 至 (e) 高斯低通响应，D₀ 依次为 5、15、30、80、230；原始响应尺寸均为 688×688，固定 [0,1] 显示。面板仅为排版缩小，单独 PNG 保留原始尺寸。
 
-![图 04-03-3](../results/04_03_filters_panel.png)
+![图 04-03-3](../results/project_04_03/04_03_filters_panel.png)
 
 图 04-03-4(a) 至 (e) 滤波后中心化频谱，参数与图 04-03-3 一致；全部与输入频谱共用对数幅值显示范围，不单独拉伸。
 
-![图 04-03-4](../results/04_03_spectra_panel.png)
+![图 04-03-4](../results/project_04_03/04_03_spectra_panel.png)
 
 图 04-03-5(a) 原图；(b) 至 (f) 分别为 D₀=5、15、30、80、230 的输出。(c) 为目标结果，固定 [0,1] 灰度显示，无填充；所有单独输出为 688×688。
 
-![图 04-03-5](../results/04_03_comparison.png)
+![图 04-03-5](../results/project_04_03/04_03_comparison.png)
 
 图 04-03-6 指定尺寸与中心的滤波器示例。响应尺寸 180×240，中心 (60,160)，D₀=15；只验证函数构造，不参与目标图滤波。
 
-![图 04-03-6](../results/04_03_custom_center_filter.png)
+![图 04-03-6](../results/project_04_03/04_03_custom_center_filter.png)
 
 ### 创新点及思考
 
@@ -249,7 +249,7 @@ import PIL
 from common_io import read_gray, validate_image, save_gray, normalize_display, save_panel
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_INPUT = ROOT / "data" / "Fig0441(a)(characters_test_pattern).tif"
+DEFAULT_INPUT = ROOT / "input" / "Fig0441(a)(characters_test_pattern).tif"
 
 
 def gaussian_lowpass(shape, d0, center=None):
@@ -359,7 +359,7 @@ def run(input_path, output_dir, d0_values=(5, 15, 30, 80, 230), padding=False,
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
-    parser.add_argument("--output", type=Path, default=ROOT / "results")
+    parser.add_argument("--output", type=Path, default=ROOT / "results" / "project_04_03")
     parser.add_argument("--d0", type=float, nargs="+", default=[5,15,30,80,230])
     parser.add_argument("--padding", action="store_true")
     parser.add_argument("--demo-shape", type=int, nargs=2, default=[180,240], metavar=("M","N"))
@@ -379,7 +379,7 @@ import unittest
 from pathlib import Path
 import numpy as np
 from PIL import Image
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common_io import read_gray, save_gray
 from project_04_03 import gaussian_lowpass, filter_image, apply_frequency_filter
 

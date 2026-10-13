@@ -25,9 +25,9 @@ import numpy as np
 from common_io import read_gray, save_gray
 from project_04_03 import filter_image
 
-original = read_gray('data/Fig0441(a)(characters_test_pattern).tif')
+original = read_gray('input/Fig0441(a)(characters_test_pattern).tif')
 lowpass, H, F, G, residual = filter_image(original, d0=15)
-# 或读取 np.load('results/04_03_lowpass_d0_15.npy')
+# 或读取 np.load('results/project_04_03/04_03_lowpass_d0_15.npy')
 # Project 04-04 的减法应使用浮点图像；负值如何显示由该项目决定。
 highpass = original - lowpass
 ```

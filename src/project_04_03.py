@@ -10,7 +10,7 @@ import PIL
 from common_io import read_gray, validate_image, save_gray, normalize_display, save_panel
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_INPUT = ROOT / "data" / "Fig0441(a)(characters_test_pattern).tif"
+DEFAULT_INPUT = ROOT / "input" / "Fig0441(a)(characters_test_pattern).tif"
 
 
 def gaussian_lowpass(shape, d0, center=None):
@@ -120,7 +120,7 @@ def run(input_path, output_dir, d0_values=(5, 15, 30, 80, 230), padding=False,
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
-    parser.add_argument("--output", type=Path, default=ROOT / "results")
+    parser.add_argument("--output", type=Path, default=ROOT / "results" / "project_04_03")
     parser.add_argument("--d0", type=float, nargs="+", default=[5,15,30,80,230])
     parser.add_argument("--padding", action="store_true")
     parser.add_argument("--demo-shape", type=int, nargs=2, default=[180,240], metavar=("M","N"))
