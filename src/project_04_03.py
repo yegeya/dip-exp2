@@ -1,4 +1,3 @@
-"""Project 04-03 Gaussian lowpass filtering, DIP 2/e Eq. (4.3-7)."""
 import argparse
 import csv
 import hashlib
@@ -11,16 +10,7 @@ from common_io import read_gray, validate_image, save_gray, normalize_display, s
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_INPUT = ROOT / "input" / "Fig0441(a)(characters_test_pattern).tif"
-
-
 def gaussian_lowpass(shape, d0, center=None):
-    """Generate H=exp(-D^2/(2*d0^2)); coordinates are (row, column).
-
-    Arbitrary positive integer M,N and finite center coordinates are supported.
-    Default fftshift origin is (M//2,N//2), including odd-sized arrays.
-    Off-origin responses are for filter construction; they need not give a real
-    spatial result. apply_frequency_filter therefore retains complex values.
-    """
     if len(shape) != 2 or any(isinstance(n, (bool, np.bool_)) or not isinstance(n, (int, np.integer)) or n <= 0 for n in shape):
         raise ValueError("shape must contain two positive integers")
     if not np.isfinite(d0) or d0 <= 0:
@@ -31,9 +21,7 @@ def gaussian_lowpass(shape, d0, center=None):
     row, col = np.ogrid[:shape[0], :shape[1]]
     return np.exp(-0.5 * (((row - center[0]) / d0) ** 2 + ((col - center[1]) / d0) ** 2))
 
-
 def apply_frequency_filter(image, response):
-    """Return centered input spectrum, filtered spectrum, COMPLEX inverse."""
     image = validate_image(image)
     response = validate_image(response)
     if image.shape != response.shape:
@@ -45,12 +33,6 @@ def apply_frequency_filter(image, response):
 
 
 def filter_image(image, d0, padding=False):
-    """Return unquantized lowpass image, H, F, G, max imaginary residual.
-
-    Default: no padding, periodic boundaries (allowed assignment approximation).
-    padding=True: zero-pad at bottom/right to 2M x 2N and crop top-left M x N.
-    d0 is in bins of the FFT actually computed, so padding changes its scale.
-    """
     image = validate_image(image)
     height, width = image.shape
     padded = np.pad(image, ((0, height), (0, width))) if padding else image
@@ -61,11 +43,8 @@ def filter_image(image, d0, padding=False):
         raise ValueError("Unexpected imaginary component in centered lowpass result")
     return inverse.real[:height, :width], response, spectrum, filtered, residual
 
-
 def gradient_energy(image):
-    """Mean squared periodic horizontal + vertical first difference."""
     return float(np.mean((image - np.roll(image, 1, 0)) ** 2 + (image - np.roll(image, 1, 1)) ** 2))
-
 
 def run(input_path, output_dir, d0_values=(5, 15, 30, 80, 230), padding=False,
         demo_shape=(180, 240), demo_center=(60, 160)):
@@ -115,7 +94,6 @@ def run(input_path, output_dir, d0_values=(5, 15, 30, 80, 230), padding=False,
                 "metrics":records}
     (output_dir / "04_03_metadata.json").write_text(json.dumps(metadata, ensure_ascii=False, indent=2), encoding="utf-8")
     return metadata
-
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
