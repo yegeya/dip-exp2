@@ -668,19 +668,26 @@ def display_correlation(correlation, logarithmic=False):
 图 04-05-5 至 04-05-7 展示程序算法运行后求得的相关函数及峰值位置。图注中的尺寸为文件的实际像素尺寸，交互窗口中的模板图像经过显示缩放，算法输入时仍保持原像素。精确相关值可以查看 `results/project_04_05/04_05_peak.json` 和 `results/project_04_05/04_05_correlation.npy` 文件。
 
 - 图 04-05-1：输入图像 Fig. 4.41(a)，256×256 像素。
-  ![输入图像](input/4.41a.jpg)
+
+![输入图像](input/4.41a.jpg)
 - 图 04-05-2：由 Fig. 4.41(b) 截图裁剪的 38×42 模板。
-  ![裁剪模板](results/project_04_05/04_05_template_cropped.png)
+
+![裁剪模板](results/project_04_05/04_05_template_cropped.png)
 - 图 04-05-3：输入图像左上角对齐并补零后的 298×298 灰度图，其余区域为零。
-  ![补零后的输入图像](results/project_04_05/04_05_image_padded.png)
+
+![补零后的输入图像](results/project_04_05/04_05_image_padded.png)
 - 图 04-05-4：裁剪模板左上角对齐并补零后的 298×298 灰度图，其余区域为零。
-  ![补零后的模板](results/project_04_05/04_05_template_padded.png)
+
+![补零后的模板](results/project_04_05/04_05_template_padded.png)
 - 图 04-05-5：298×298 二维相关函数，非负值相对峰值线性映射到 0–255。
-  ![二维相关函数](results/project_04_05/04_05_correlation_display.png)
+
+![二维相关函数](results/project_04_05/04_05_correlation_display.png)
 - 图 04-05-6：对原图上的峰值位置，用模板大小的标注框进行标注，标注框从最大值位置框选模板在原图的匹配位置。
-  ![匹配位置](results/project_04_05/04_05_match_location.png)
+
+![匹配位置](results/project_04_05/04_05_match_location.png)
 - 图 04-05-7：对数映射的相关函数辅助观察图。
-  ![对数显示相关函数](results/project_04_05/04_05_correlation_log_display.png)
+
+![对数显示相关函数](results/project_04_05/04_05_correlation_log_display.png)
 
 ### 3.2 结果分析
 
