@@ -6,26 +6,22 @@ import platform
 from pathlib import Path
 import numpy as np
 import PIL
-from common_io import read_gray, validate_image, save_gray, normalize_display, save_panel
+from common_io import read_gray, save_gray, normalize_display, save_panel
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_INPUT = ROOT / "input" / "Fig0441(a)(characters_test_pattern).tif"
 def gaussian_lowpass(shape, d0, center=None):
-    if len(shape) != 2 or any(isinstance(n, (bool, np.bool_)) or not isinstance(n, (int, np.integer)) or n <= 0 for n in shape):
-        raise ValueError("shape must contain two positive integers")
-    if not np.isfinite(d0) or d0 <= 0:
-        raise ValueError("d0 must be finite and positive")
-    center = (shape[0] // 2, shape[1] // 2) if center is None else center
-    if len(center) != 2 or not np.isfinite(center).all():
-        raise ValueError("center must contain two finite coordinates")
+    valid_shape = len(shape) == 2 and all(
+        isinstance(size, (int, np.integer)) and size > 0 for size in shape
+    )
+    if not valid_shape or not np.isfinite(d0) or d0 <= 0:
+        raise ValueError("shape and d0 must be positive")
+    if center is None:
+        center = (shape[0] // 2, shape[1] // 2)
     row, col = np.ogrid[:shape[0], :shape[1]]
     return np.exp(-0.5 * (((row - center[0]) / d0) ** 2 + ((col - center[1]) / d0) ** 2))
 
 def apply_frequency_filter(image, response):
-    image = validate_image(image)
-    response = validate_image(response)
-    if image.shape != response.shape:
-        raise ValueError("image and response shapes must match")
     spectrum = np.fft.fftshift(np.fft.fft2(image))
     filtered = spectrum * response
     inverse = np.fft.ifft2(np.fft.ifftshift(filtered))
@@ -33,14 +29,11 @@ def apply_frequency_filter(image, response):
 
 
 def filter_image(image, d0, padding=False):
-    image = validate_image(image)
     height, width = image.shape
     padded = np.pad(image, ((0, height), (0, width))) if padding else image
     response = gaussian_lowpass(padded.shape, d0)
     spectrum, filtered, inverse = apply_frequency_filter(padded, response)
     residual = float(np.max(np.abs(inverse.imag)))
-    if residual > 1e-10 * max(1.0, float(np.max(np.abs(inverse.real)))):
-        raise ValueError("Unexpected imaginary component in centered lowpass result")
     return inverse.real[:height, :width], response, spectrum, filtered, residual
 
 def gradient_energy(image):
