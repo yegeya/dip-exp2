@@ -651,7 +651,7 @@ def display_correlation(correlation, logarithmic=False):
 
 程序输出会将结果在交互窗口中弹窗展示，终端会输出相关函数最大值位置坐标和最大值，并将完整结果均保存到`results/project_04_05/`目录下。
 
-#### 2.2.4 实验环境
+#### 2.2.3 实验环境
 
 - 操作系统：Windows。
 - 编程语言及版本：Python 3.12.7。
@@ -670,22 +670,28 @@ def display_correlation(correlation, logarithmic=False):
 - 图 04-05-1：输入图像 Fig. 4.41(a)，256×256 像素。
 
 ![输入图像](input/4.41a.jpg)
+
 - 图 04-05-2：由 Fig. 4.41(b) 截图裁剪的 38×42 模板。
 
 ![裁剪模板](results/project_04_05/04_05_template_cropped.png)
+
 - 图 04-05-3：输入图像左上角对齐并补零后的 298×298 灰度图，其余区域为零。
 
 ![补零后的输入图像](results/project_04_05/04_05_image_padded.png)
+
 - 图 04-05-4：裁剪模板左上角对齐并补零后的 298×298 灰度图，其余区域为零。
 
 ![补零后的模板](results/project_04_05/04_05_template_padded.png)
-- 图 04-05-5：298×298 二维相关函数，非负值相对峰值线性映射到 0–255。
+
+- 图 04-05-5：程序运行得到的 298×298 二维相关函数结果图，对应示例的 4.41(e) 图，其中非负值相对峰值线性映射到 0–255。
 
 ![二维相关函数](results/project_04_05/04_05_correlation_display.png)
+
 - 图 04-05-6：对原图上的峰值位置，用模板大小的标注框进行标注，标注框从最大值位置框选模板在原图的匹配位置。
 
 ![匹配位置](results/project_04_05/04_05_match_location.png)
-- 图 04-05-7：对数映射的相关函数辅助观察图。
+
+- 图 04-05-7：得到的对数映射的相关函数辅助观察图。
 
 ![对数显示相关函数](results/project_04_05/04_05_correlation_log_display.png)
 
